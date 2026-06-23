@@ -25,34 +25,40 @@ const songs = [
     file:   "Merry Christmas, i miss you.mp3"
   },
   {
-    title:  "Langit Biru Jakarta",
-    artist: "Ardian Syah",
-    cover:  "",
-    file:   "music/song2.mp3"
+    title:  "Style",
+    artist: "Taylor Swift",
+    cover:  "Style.jpg",
+    file:   "Style.mp3"
   },
   {
-    title:  "Quantum Drift",
-    artist: "Static Wave",
-    cover:  "",
-    file:   "music/song3.mp3"
+    title:  "Favorite",
+    artist: "Austin George",
+    cover:  "Favorite.jpg",
+    file:   "Favorite.mp3"
   },
   {
-    title:  "Rindu yang Membiru",
-    artist: "Dira Maharani",
-    cover:  "",
-    file:   "music/song4.mp3"
+    title:  "Multo",
+    artist: "Cup of Joe,
+    cover:  "Multo.jpg",
+    file:   "Multo.mp3"
   },
   {
-    title:  "Deep Ocean Signal",
-    artist: "The Coral Ensemble",
-    cover:  "",
-    file:   "music/song5.mp3"
+    title:  "Scott Street",
+    artist: "Phoebe Bridgers",
+    cover:  "Scott Street.jpg",
+    file:   "Scott Street.mp3"
   },
   {
-    title:  "Senja di Selatan",
-    artist: "Rio Santosa",
-    cover:  "",
-    file:   "music/song6.mp3"
+    title:  "About You",
+    artist: "The 1975",
+    cover:  "About You.jpg",
+    file:   "About You.mp3"
+  },
+  {
+    title:  "If I Had a Gun",
+    artist: "Noel Gallagher's High Flying Birds",
+    cover:  "If I Had A Gun.jpg",
+    file:   "If I Had A Gun.mp3"
   }
 ];
 /* ─── Akhir daftar lagu ─── */
