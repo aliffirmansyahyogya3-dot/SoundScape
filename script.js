@@ -53,13 +53,13 @@ const songs = [
     artist: "The 1975",
     cover:  "About You.jpg",
     file:   "About You.mp3"
-  },
-  {
-    title:  "If I Had a Gun",
-    artist: "Noel Gallagher's High Flying Birds",
-    cover:  "If I Had A Gun.jpg",
-    file:   "If I Had A Gun.mp3"
-  }
+  } //,
+// {
+ //   title:  "If I Had a Gun",
+//    artist: "Noel Gallagher's High Flying Birds",
+//    cover:  "If I Had A Gun.jpg",
+///    file:   "If I Had A Gun.mp3"
+//  }
 ];
 /* ─── Akhir daftar lagu ─── */
 
