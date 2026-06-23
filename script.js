@@ -19,10 +19,10 @@
    ============================================= */
 const songs = [
   {
-    title:  "Midnight Glow",
-    artist: "Neon Archipelago",
-    cover:  "",
-    file:   "music/song1.mp3"
+    title:  "Merry Christmas, i miss you",
+    artist: "Alex Crichton",
+    cover:  "Merry Christmas, i miss you.jpg",
+    file:   "Merry Christmas, i miss you.mp3"
   },
   {
     title:  "Langit Biru Jakarta",
