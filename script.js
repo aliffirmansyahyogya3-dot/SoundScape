@@ -38,7 +38,7 @@ const songs = [
   },
   {
     title:  "Multo",
-    artist: "Cup of Joe,
+    artist: "Cup of Joe",
     cover:  "Multo.jpg",
     file:   "Multo.mp3"
   },
