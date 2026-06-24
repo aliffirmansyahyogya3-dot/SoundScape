@@ -77,6 +77,18 @@ const songs = [
     artist: "The Temper Trap",
     cover:  "Sweet Disposition.jpg",
     file:   "Sweet Disposition.mp3"
+   },
+   {
+    title:  "Bayangkan",
+    artist: "Hindia",
+    cover:  "Bayangkan.jpg",
+    file:   "Bayangkan.mp3"
+  }, 
+   {
+    title:  "Merry Christmas, Please Dont",
+    artist: "Bleachers",
+    cover:  "Merry Christmas, Please Dont.jpg",
+    file:   "Merry Christmas, Please Dont.mp3"
    }
 ];
 /* ─── Akhir daftar lagu ─── */
