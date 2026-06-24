@@ -59,7 +59,25 @@ const songs = [
     artist: "Noel Gallagher High Flying Birds",
     cover:  "If I Had A Gun.jpg",
     file:   "If I Had A Gun.mp3"
-   }
+   }, 
+   {
+    title:  "Ramai Sepi Bersama",
+    artist: "Hindia",
+    cover:  "Ramai Sepi Bersama.jpg",
+    file:   "Ramai Sepi Bersama.mp3"
+  }, 
+   {
+    title:  "Penjaga Hati",
+    artist: "Nadhif Basalamah",
+    cover:  "Penjaga Hati.jpg",
+    file:   "Penjaga Hati.mp3"
+  }, 
+   {
+    title:  "Sweet Disposition",
+    artist: "The Temper Trap",
+    cover:  "Sweet Disposition.jpg",
+    file:   "Sweet Disposition.mp3"
+  }, 
 ];
 /* ─── Akhir daftar lagu ─── */
 
