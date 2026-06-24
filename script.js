@@ -56,7 +56,7 @@ const songs = [
   }, 
    {
     title:  "If I Had a Gun",
-    artist: "Noel Gallagher's High Flying Birds",
+    artist: "Noel Gallagher High Flying Birds",
     cover:  "If I Had A Gun.jpg",
     file:   "If I Had A Gun.mp3"
    }
