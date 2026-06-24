@@ -77,7 +77,7 @@ const songs = [
     artist: "The Temper Trap",
     cover:  "Sweet Disposition.jpg",
     file:   "Sweet Disposition.mp3"
-  }, 
+   }
 ];
 /* ─── Akhir daftar lagu ─── */
 
