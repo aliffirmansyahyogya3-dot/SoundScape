@@ -85,10 +85,10 @@ const songs = [
     file:   "Bayangkan.mp3"
   }, 
    {
-    title:  "Merry Christmas, Please Dont",
+    title:  "Merry Christmas, Please Dont Call",
     artist: "Bleachers",
-    cover:  "Merry Christmas, Please Dont.jpg",
-    file:   "Merry Christmas, Please Dont.mp3"
+    cover:  "Merry Christmas, Please Dont Call.jpg",
+    file:   "Merry Christmas, Please Dont Call.mp3"
    }
 ];
 /* ─── Akhir daftar lagu ─── */
