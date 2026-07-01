@@ -89,6 +89,36 @@ const songs = [
     artist: "Bleachers",
     cover:  "Merry Christmas, Please Dont Call.jpg",
     file:   "Merry Christmas, Please Dont Call.mp3"
+   }, 
+   {
+    title:  "Terbuang Dalam Waktu",
+    artist: "Barasuara",
+    cover:  "Terbuang dalam waktu.jpg",
+    file:   "Terbuang dalam Waktu.mp3"
+  }, 
+   {
+    title:  "Serana",
+    artist: "For Revenge",
+    cover:  "Serana.jpg",
+    file:   "Serana.mp3"
+  }, 
+   {
+    title:  "Penuh",
+    artist: "Nadhif Basalamah",
+    cover:  "Penuh.jpg",
+    file:   "Penuh.mp3"
+  },
+   {
+    title:  "Something Wrong",
+    artist: "Alex Crichton",
+    cover:  "Something Wrong.jpg",
+    file:   "Something Wrong.mp3"
+  }, 
+   {
+    title:  "Lalu Biru",
+    artist: "Eleanor Whisper",
+    cover:  "Lalu Biru.jpg",
+    file:   "Lalu Biru.mp3"
    }
 ];
 /* ─── Akhir daftar lagu ─── */
