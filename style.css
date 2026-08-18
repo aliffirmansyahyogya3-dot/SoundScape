@@ -933,57 +933,7 @@ svg { display: block; fill: currentColor; }
 }
 
 
-/* =============================================
-   BOTTOM NAV
-   ============================================= */
-.bottom-nav {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  z-index: 40;
-  height: calc(var(--nav-h) + var(--safe-bottom));
-  padding-bottom: var(--safe-bottom);
-  display: flex;
-  align-items: flex-start;
-  padding-top: 0;
-  background: rgba(8, 8, 18, 0.92);
-  backdrop-filter: blur(48px) saturate(180%);
-  -webkit-backdrop-filter: blur(48px) saturate(180%);
-  border-top: 1px solid rgba(255,255,255,0.07);
-  box-shadow:
-    0 -1px 0 rgba(255,255,255,0.05),
-    0 -16px 48px rgba(0,0,0,0.4);
-}
 
-.nav-item {
-  flex: 1;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 4px;
-  padding: 10px 0 0;
-  color: var(--text-muted);
-  font-size: 10px; font-weight: 600;
-  letter-spacing: 0.3px;
-  transition: color var(--dur-fast) var(--ease);
-  height: var(--nav-h);
-}
-.nav-item svg { width: 22px; height: 22px; transition: transform var(--dur-fast) var(--ease-spring); }
-.nav-item:hover { color: var(--text-secondary); }
-.nav-item:active svg { transform: scale(0.85); }
-.nav-item.active { color: var(--text-primary); }
-.nav-item.active svg { fill: var(--text-primary); }
-
-/* Green dot under active tab */
-.nav-item.active::after {
-  content: '';
-  display: block;
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: var(--green-bright);
-  position: absolute;
-  bottom: calc(var(--safe-bottom) + 4px);
-  left: 50%; transform: translateX(-50%);
-}
-.nav-item { position: relative; }
 
 
 /* =============================================
@@ -1032,13 +982,6 @@ svg { display: block; fill: currentColor; }
   }
   #mini-player.hidden {
     transform: translateX(-50%) translateY(20px);
-  }
-  .bottom-nav {
-    max-width: 430px;
-    left: 50%; transform: translateX(-50%);
-    border-radius: var(--r-xl) var(--r-xl) 0 0;
-    border-left: 1px solid var(--glass-border);
-    border-right: 1px solid var(--glass-border);
   }
   #particles-canvas, #bg-gradient, #glow-orb {
     max-width: 430px;
