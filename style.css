@@ -832,7 +832,7 @@ svg { display: block; fill: currentColor; }
 #mini-player {
   position: fixed;
   left: 8px; right: 8px;
-  bottom: calc(var(--nav-h) + var(--safe-bottom) + 8px);
+  bottom: calc(var(--safe-bottom) + 6px);
   z-index: 50;
   height: var(--mini-h);
   border-radius: var(--r-lg);
