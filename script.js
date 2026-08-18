@@ -306,7 +306,29 @@ function buildSongList() {
     songList.appendChild(item);
   });
 }
+/* =============================================
+   SEARCH PLAYLIST
+   ============================================= */
+const playlistSearch = document.getElementById('playlist-search');
 
+playlistSearch.addEventListener('input', () => {
+  const query = playlistSearch.value.toLowerCase().trim();
+
+  document.querySelectorAll('.song-item').forEach((item, index) => {
+    const song = songs[index];
+
+    if (!song) return;
+
+    const title = song.title.toLowerCase();
+    const artist = song.artist.toLowerCase();
+
+    const matches =
+      title.includes(query) ||
+      artist.includes(query);
+
+    item.style.display = matches ? '' : 'none';
+  });
+});
 function coverHTML(song, i) {
   if (song.cover) {
     return `<img src="${esc(song.cover)}" alt="${esc(song.title)}"
