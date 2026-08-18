@@ -119,7 +119,56 @@ const songs = [
     artist: "Eleanor Whisper",
     cover:  "Lalu Biru.jpg",
     file:   "Lalu Biru.mp3"
+   },
+   {
+    title:  "Lebih Dari",
+    artist: "Alkateri",
+    cover:  "Alkateri.png",
+    file:   "Lebih Dari.mp3"
+   },
+    {
+    title:  "Egosentris",
+    artist: "Alkateri",
+    cover:  "Alkateri.png",
+    file:   "Egosentris.mp3"
+   },
+    {
+    title:  "Sekian, Terima Kasih",
+    artist: "The Jeblogs",
+    cover:  "Sekian, Terima Kasih.jpg",
+    file:   "Sekian, Terima Kasih.mp3"
+   },
+    {
+    title:  "Surabaya",
+    artist: "Crayon Case",
+    cover:  "Surabaya.jpg",
+    file:   "Surabaya.mp3"
+   },
+   {
+    title:  "Sumpah Galaxy",
+    artist: "FSTVLST",
+    cover:  "FSTVLST.jpg",
+    file:   "Sumpah Galaxy.mp3"
+   },
+   {
+    title:  "Mereguk Anti Depresan Lagi",
+    artist: "The Jansen",
+    cover:  "The Jansen.jpg",
+    file:   "Mereguk Anti Depresan Lagi.mp3"
+   },
+   {
+    title:  "Kau Pemeran Utama Di Sebuah Opera",
+    artist: "The Jansen",
+    cover:  "The Jansen.jpg",
+    file:   "Kau Pemeran Utama Di Sebuah Opera.mp3"
+   },
+    {
+    title:  "Ku Bukan Mesin Lotremu",
+    artist: "The Jansen",
+    cover:  "The Jansen.jpg",
+    file:   "Ku Bukan Mesin Lotremu.mp3"
    }
+   
 ];
 /* ─── Akhir daftar lagu ─── */
 
