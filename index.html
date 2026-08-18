@@ -71,11 +71,18 @@
         </div>
       </div>
 
-      <!-- Add to playlist button -->
-      <button class="btn-add-playlist">
-        <span class="add-icon">+</span>
-        Tambahkan ke playlist ini
-      </button>
+      <div class="playlist-search">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M10.5 4a6.5 6.5 0 1 0 4.04 11.59l4.44 4.44 1.41-1.41-4.44-4.44A6.5 6.5 0 0 0 10.5 4zm0 2a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9z"/>
+  </svg>
+
+  <input
+    type="text"
+    id="playlist-search"
+    placeholder="Cari di playlist..."
+    autocomplete="off"
+  >
+      </div>
 
       <!-- Song list -->
       <div class="song-list" id="song-list">
