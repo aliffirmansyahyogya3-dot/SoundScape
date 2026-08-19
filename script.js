@@ -281,26 +281,104 @@ function init() {
    ============================================= */
 function buildHeroGrid() {
   heroGrid.innerHTML = '';
-  const picks = songs.slice(0, 4);
 
-  // Fill to 4 slots even if fewer songs
-  while (picks.length < 4) picks.push(null);
+  const totalSlots = 4;
 
-  picks.forEach(song => {
+  for (let i = 0; i < totalSlots; i++) {
+    const songIndex = i % songs.length;
+    const song = songs[songIndex];
+
     const div = document.createElement('div');
     div.className = 'hero-thumb';
 
+    // Simpan index lagu yang sedang ditampilkan
+    div.dataset.songIndex = songIndex;
+
     if (song && song.cover) {
       const img = document.createElement('img');
-      img.src   = song.cover;
-      img.alt   = song.title || '';
-      img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
-      img.onerror = () => { img.replaceWith(placeholderThumb()); };
+
+      img.src = song.cover;
+      img.alt = song.title || '';
+
+      img.onerror = () => {
+        img.replaceWith(placeholderThumb());
+      };
+
       div.appendChild(img);
     } else {
       div.appendChild(placeholderThumb());
     }
+
     heroGrid.appendChild(div);
+  }
+
+  // Mulai rotasi cover
+  startHeroCoverRotation();
+}
+/* =============================================
+   AUTO ROTATE COVER GRID
+   ============================================= */
+
+let heroRotationTimer = null;
+
+function startHeroCoverRotation() {
+
+  // Hentikan timer sebelumnya
+  if (heroRotationTimer) {
+    clearInterval(heroRotationTimer);
+  }
+
+  // Kalau lagu 4 atau kurang, tidak perlu animasi
+  if (songs.length <= 4) return;
+
+  // Ganti cover setiap 3.5 detik
+  heroRotationTimer = setInterval(() => {
+    rotateHeroCovers();
+  }, 3500);
+}
+
+
+function rotateHeroCovers() {
+
+  const thumbs = heroGrid.querySelectorAll('.hero-thumb');
+
+  thumbs.forEach((thumb) => {
+
+    let currentIndex = Number(thumb.dataset.songIndex);
+
+    // Lompat 4 lagu supaya setiap slot mendapat cover berikutnya
+    let nextIndex = (currentIndex + 4) % songs.length;
+
+    const nextSong = songs[nextIndex];
+
+    if (!nextSong || !nextSong.cover) return;
+
+    // Animasi keluar
+    thumb.classList.add('changing');
+
+    setTimeout(() => {
+
+      const newImg = document.createElement('img');
+
+      newImg.src = nextSong.cover;
+      newImg.alt = nextSong.title || '';
+      newImg.className = 'hero-new';
+
+      newImg.onerror = () => {
+        newImg.replaceWith(placeholderThumb());
+      };
+
+      // Ganti gambar
+      thumb.innerHTML = '';
+      thumb.appendChild(newImg);
+
+      // Simpan index baru
+      thumb.dataset.songIndex = nextIndex;
+
+      // Animasi masuk
+      thumb.classList.remove('changing');
+
+    }, 350);
   });
 }
 
