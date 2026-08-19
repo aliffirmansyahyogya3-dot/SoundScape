@@ -167,7 +167,51 @@ const songs = [
     artist: "The Jansen",
     cover:  "The Jansen.jpg",
     file:   "Ku Bukan Mesin Lotremu.mp3"
+   },
+   {
+    title:  "Jatuh Suka",
+    artist: "Tulus",
+    cover:  "Tulus.jpg",
+    file:   "Jatuh Suka.mp3"
+   },
+   {
+    title:  "Teh Hijau",
+    artist: "Tulus",
+    cover:  "Teh Hijau.jpg",
+    file:   "Teh Hijau.mp3"
+   },
+   {
+    title:  "Treat You Better",
+    artist: "Shawn Mendes",
+    cover:  "Treat You Better.jpg",
+    file:   "Treat You Better.mp3"
+   },
+   {
+    title:  "Tarot",
+    artist: "Feast",
+    cover:  "Feast.jpg",
+    file:   "Tarot.mp3"
+   },
+   {
+    title:  "Bersandarlah",
+    artist: "The Jeblogs",
+    cover:  "Sambutlah.jpg",
+    file:   "Bersandarlah.mp3"
+   },
+   {
+    title:  "Panasea",
+    artist: "Rumahsakit",
+    cover:  "Panasea.jpg",
+    file:   "Panasea.mp3"
+   },
+   {
+    title:  "Biarkan Berlari",
+    artist: "The Cloves and The Tobacco",
+    cover:  "Biarkan Berlari.jpg",
+    file:   "Biarkan Berlari.mp3"
    }
+   
+   
    
 ];
 /* ─── Akhir daftar lagu ─── */
