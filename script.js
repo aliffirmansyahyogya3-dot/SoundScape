@@ -268,11 +268,18 @@ function init() {
   buildHeroGrid();
   buildSongList();
   updatePlaylistCount();
+
   loadSong(0, false);
+
   initVolumeFromLevel();
   startParticles();
   startVisualizer();
   attachEvents();
+
+  // MIX / QUEUE
+  initMixSwipe();
+  initMixButtons();
+  renderMixQueue();
 }
 
 
@@ -393,7 +400,327 @@ function updatePlaylistCount() {
   const n = songs.length;
   playlistCount.textContent = `${n} lagu`;
 }
+/* =============================================
+   MIX / QUEUE SYSTEM
+   ============================================= */
 
+let mixQueue = [];
+let mixIsOpen = false;
+
+
+/* ---------------------------------------------
+   BUKA / TUTUP MIX
+--------------------------------------------- */
+
+function toggleMixQueue(forceState = null) {
+  const mixQueueEl = document.getElementById('mix-queue');
+
+  if (!mixQueueEl) return;
+
+  mixIsOpen = forceState !== null
+    ? forceState
+    : !mixIsOpen;
+
+  mixQueueEl.classList.toggle('open', mixIsOpen);
+}
+
+
+/* ---------------------------------------------
+   RENDER QUEUE
+--------------------------------------------- */
+
+function renderMixQueue() {
+
+  const list = document.getElementById('queue-list');
+  const count = document.getElementById('queue-count');
+
+  if (!list || !count) return;
+
+  count.textContent = `${mixQueue.length} lagu`;
+
+  list.innerHTML = '';
+
+  if (mixQueue.length === 0) {
+
+    list.innerHTML = `
+      <div class="queue-empty">
+        Belum ada lagu berikutnya
+      </div>
+    `;
+
+    return;
+  }
+
+  mixQueue.forEach((songIndex, queueIndex) => {
+
+    const song = songs[songIndex];
+
+    if (!song) return;
+
+    const item = document.createElement('div');
+
+    item.className = 'queue-item';
+
+    item.innerHTML = `
+      <div class="queue-number">
+        ${queueIndex + 1}
+      </div>
+
+      <div class="queue-cover">
+        ${
+          song.cover
+            ? `<img src="${song.cover}" alt="${song.title || ''}">`
+            : ''
+        }
+      </div>
+
+      <div class="queue-info">
+        <div class="queue-song-title">
+          ${song.title || 'Untitled'}
+        </div>
+
+        <div class="queue-song-artist">
+          ${song.artist || 'Unknown Artist'}
+        </div>
+      </div>
+
+      <button
+        class="queue-more"
+        aria-label="Opsi lagu"
+        data-queue-index="${queueIndex}"
+      >
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="5" r="1.5"/>
+          <circle cx="12" cy="12" r="1.5"/>
+          <circle cx="12" cy="19" r="1.5"/>
+        </svg>
+      </button>
+    `;
+
+
+    /* Klik lagu → langsung putar */
+
+    item.addEventListener('click', (e) => {
+
+      if (e.target.closest('.queue-more')) return;
+
+      playQueueSong(queueIndex);
+
+    });
+
+
+    list.appendChild(item);
+
+  });
+}
+
+
+/* ---------------------------------------------
+   PUTAR LAGU DARI QUEUE
+--------------------------------------------- */
+
+function playQueueSong(queueIndex) {
+
+  if (
+    queueIndex < 0 ||
+    queueIndex >= mixQueue.length
+  ) {
+    return;
+  }
+
+  const songIndex = mixQueue[queueIndex];
+
+  /*
+   * Hapus lagu yang dipilih dari queue
+   */
+  mixQueue.splice(queueIndex, 1);
+
+  renderMixQueue();
+
+  /*
+   * Pakai fungsi loadSong() milik player kamu
+   */
+  loadSong(songIndex, true);
+
+}
+
+
+/* ---------------------------------------------
+   TAMBAH LAGU KE QUEUE
+--------------------------------------------- */
+
+function addToMixQueue(songIndex) {
+
+  if (
+    songIndex < 0 ||
+    songIndex >= songs.length
+  ) {
+    return;
+  }
+
+  /*
+   * Jangan masukkan lagu yang sama dua kali
+   */
+  if (mixQueue.includes(songIndex)) {
+    return;
+  }
+
+  mixQueue.push(songIndex);
+
+  renderMixQueue();
+}
+
+
+/* ---------------------------------------------
+   HAPUS SEMUA QUEUE
+--------------------------------------------- */
+
+function clearMixQueue() {
+
+  mixQueue = [];
+
+  renderMixQueue();
+
+}
+
+
+/* =============================================
+   SWIPE MIX
+   ============================================= */
+
+function initMixSwipe() {
+
+  const handle = document.getElementById('mix-handle');
+
+  if (!handle) return;
+
+
+  let startY = 0;
+  let currentY = 0;
+  let isDragging = false;
+
+
+  handle.addEventListener('touchstart', (e) => {
+
+    startY = e.touches[0].clientY;
+
+    currentY = startY;
+
+    isDragging = true;
+
+  }, { passive: true });
+
+
+  handle.addEventListener('touchmove', (e) => {
+
+    if (!isDragging) return;
+
+    currentY = e.touches[0].clientY;
+
+  }, { passive: true });
+
+
+  handle.addEventListener('touchend', () => {
+
+    if (!isDragging) return;
+
+    const distance = currentY - startY;
+
+    isDragging = false;
+
+
+    /*
+     * Swipe ke atas
+     */
+    if (distance < -40) {
+
+      toggleMixQueue(true);
+
+    }
+
+
+    /*
+     * Swipe ke bawah
+     */
+    else if (distance > 40) {
+
+      toggleMixQueue(false);
+
+    }
+
+  });
+
+
+  /*
+   * Tap handle juga bisa membuka
+   */
+
+  handle.addEventListener('click', () => {
+
+    toggleMixQueue();
+
+  });
+
+}
+
+
+/* =============================================
+   TOMBOL CLEAR
+   ============================================= */
+
+function initMixButtons() {
+
+  const clearButton = document.getElementById('queue-clear');
+
+  if (clearButton) {
+
+    clearButton.addEventListener('click', (e) => {
+
+      e.stopPropagation();
+
+      clearMixQueue();
+
+    });
+
+  }
+
+}
+
+
+/* =============================================
+   AUTO QUEUE
+   ============================================= */
+
+function buildAutoMixQueue(currentIndex) {
+
+  mixQueue = [];
+
+  if (!songs || songs.length === 0) {
+    renderMixQueue();
+    return;
+  }
+
+
+  /*
+   * Ambil maksimal 5 lagu setelah lagu sekarang
+   */
+
+  const maxQueue = Math.min(5, songs.length - 1);
+
+
+  for (let i = 1; i <= maxQueue; i++) {
+
+    const nextIndex =
+      (currentIndex + i) % songs.length;
+
+    mixQueue.push(nextIndex);
+
+  }
+
+
+  renderMixQueue();
+
+}
 
 /* =============================================
    SONG LIST
