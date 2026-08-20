@@ -144,7 +144,64 @@
         <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
       </button>
     </div>
+    <!-- MIX / QUEUE -->
+    <div class="mix-queue" id="mix-queue">
 
+      <!-- Handle untuk swipe -->
+      <div class="mix-handle-area" id="mix-handle">
+        <div class="mix-handle"></div>
+        <div class="mix-label">
+          <span>MIX</span>
+          <svg viewBox="0 0 24 24">
+            <path d="M7 14l5-5 5 5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Isi queue -->
+      <div class="mix-content">
+
+        <div class="mix-header">
+          <div>
+            <span class="mix-title">Berikutnya</span>
+            <span class="mix-subtitle" id="queue-count">0 lagu</span>
+          </div>
+
+          <button class="mix-clear" id="queue-clear">
+            Bersihkan
+          </button>
+        </div>
+
+        <!-- Lagu-lagu queue akan dibuat JS -->
+        <div class="queue-list" id="queue-list">
+
+          <!-- Contoh struktur lagu -->
+          <div class="queue-item">
+            <div class="queue-number">1</div>
+
+            <div class="queue-cover">
+              <img src="" alt="">
+            </div>
+
+            <div class="queue-info">
+              <div class="queue-song-title">Lagu Berikutnya</div>
+              <div class="queue-song-artist">Artist</div>
+            </div>
+
+            <button class="queue-more" aria-label="Opsi lagu">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="5" r="1.5"/>
+                <circle cx="12" cy="12" r="1.5"/>
+                <circle cx="12" cy="19" r="1.5"/>
+              </svg>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    
     <!-- Progress -->
     <div class="player-progress-wrap">
       <div class="progress-bar-track" id="progress-track">
