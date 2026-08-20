@@ -229,6 +229,8 @@ let volumeLevel  = 0.8;
 
 let shuffleQueue = [];
 let shufflePos   = 0;
+// MIX / UP NEXT
+let mixQueue = [];
 
 // Web Audio
 let audioCtx, analyser, sourceNode, dataArray, animRaf;
@@ -268,18 +270,11 @@ function init() {
   buildHeroGrid();
   buildSongList();
   updatePlaylistCount();
-
   loadSong(0, false);
-
   initVolumeFromLevel();
   startParticles();
   startVisualizer();
   attachEvents();
-
-  // MIX / QUEUE
-  initMixSwipe();
-  initMixButtons();
-  renderMixQueue();
 }
 
 
@@ -400,327 +395,8 @@ function updatePlaylistCount() {
   const n = songs.length;
   playlistCount.textContent = `${n} lagu`;
 }
-/* =============================================
-   MIX / QUEUE SYSTEM
-   ============================================= */
+  
 
-let mixQueue = [];
-let mixIsOpen = false;
-
-
-/* ---------------------------------------------
-   BUKA / TUTUP MIX
---------------------------------------------- */
-
-function toggleMixQueue(forceState = null) {
-  const mixQueueEl = document.getElementById('mix-queue');
-
-  if (!mixQueueEl) return;
-
-  mixIsOpen = forceState !== null
-    ? forceState
-    : !mixIsOpen;
-
-  mixQueueEl.classList.toggle('open', mixIsOpen);
-}
-
-
-/* ---------------------------------------------
-   RENDER QUEUE
---------------------------------------------- */
-
-function renderMixQueue() {
-
-  const list = document.getElementById('queue-list');
-  const count = document.getElementById('queue-count');
-
-  if (!list || !count) return;
-
-  count.textContent = `${mixQueue.length} lagu`;
-
-  list.innerHTML = '';
-
-  if (mixQueue.length === 0) {
-
-    list.innerHTML = `
-      <div class="queue-empty">
-        Belum ada lagu berikutnya
-      </div>
-    `;
-
-    return;
-  }
-
-  mixQueue.forEach((songIndex, queueIndex) => {
-
-    const song = songs[songIndex];
-
-    if (!song) return;
-
-    const item = document.createElement('div');
-
-    item.className = 'queue-item';
-
-    item.innerHTML = `
-      <div class="queue-number">
-        ${queueIndex + 1}
-      </div>
-
-      <div class="queue-cover">
-        ${
-          song.cover
-            ? `<img src="${song.cover}" alt="${song.title || ''}">`
-            : ''
-        }
-      </div>
-
-      <div class="queue-info">
-        <div class="queue-song-title">
-          ${song.title || 'Untitled'}
-        </div>
-
-        <div class="queue-song-artist">
-          ${song.artist || 'Unknown Artist'}
-        </div>
-      </div>
-
-      <button
-        class="queue-more"
-        aria-label="Opsi lagu"
-        data-queue-index="${queueIndex}"
-      >
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="5" r="1.5"/>
-          <circle cx="12" cy="12" r="1.5"/>
-          <circle cx="12" cy="19" r="1.5"/>
-        </svg>
-      </button>
-    `;
-
-
-    /* Klik lagu → langsung putar */
-
-    item.addEventListener('click', (e) => {
-
-      if (e.target.closest('.queue-more')) return;
-
-      playQueueSong(queueIndex);
-
-    });
-
-
-    list.appendChild(item);
-
-  });
-}
-
-
-/* ---------------------------------------------
-   PUTAR LAGU DARI QUEUE
---------------------------------------------- */
-
-function playQueueSong(queueIndex) {
-
-  if (
-    queueIndex < 0 ||
-    queueIndex >= mixQueue.length
-  ) {
-    return;
-  }
-
-  const songIndex = mixQueue[queueIndex];
-
-  /*
-   * Hapus lagu yang dipilih dari queue
-   */
-  mixQueue.splice(queueIndex, 1);
-
-  renderMixQueue();
-
-  /*
-   * Pakai fungsi loadSong() milik player kamu
-   */
-  loadSong(songIndex, true);
-
-}
-
-
-/* ---------------------------------------------
-   TAMBAH LAGU KE QUEUE
---------------------------------------------- */
-
-function addToMixQueue(songIndex) {
-
-  if (
-    songIndex < 0 ||
-    songIndex >= songs.length
-  ) {
-    return;
-  }
-
-  /*
-   * Jangan masukkan lagu yang sama dua kali
-   */
-  if (mixQueue.includes(songIndex)) {
-    return;
-  }
-
-  mixQueue.push(songIndex);
-
-  renderMixQueue();
-}
-
-
-/* ---------------------------------------------
-   HAPUS SEMUA QUEUE
---------------------------------------------- */
-
-function clearMixQueue() {
-
-  mixQueue = [];
-
-  renderMixQueue();
-
-}
-
-
-/* =============================================
-   SWIPE MIX
-   ============================================= */
-
-function initMixSwipe() {
-
-  const handle = document.getElementById('mix-handle');
-
-  if (!handle) return;
-
-
-  let startY = 0;
-  let currentY = 0;
-  let isDragging = false;
-
-
-  handle.addEventListener('touchstart', (e) => {
-
-    startY = e.touches[0].clientY;
-
-    currentY = startY;
-
-    isDragging = true;
-
-  }, { passive: true });
-
-
-  handle.addEventListener('touchmove', (e) => {
-
-    if (!isDragging) return;
-
-    currentY = e.touches[0].clientY;
-
-  }, { passive: true });
-
-
-  handle.addEventListener('touchend', () => {
-
-    if (!isDragging) return;
-
-    const distance = currentY - startY;
-
-    isDragging = false;
-
-
-    /*
-     * Swipe ke atas
-     */
-    if (distance < -40) {
-
-      toggleMixQueue(true);
-
-    }
-
-
-    /*
-     * Swipe ke bawah
-     */
-    else if (distance > 40) {
-
-      toggleMixQueue(false);
-
-    }
-
-  });
-
-
-  /*
-   * Tap handle juga bisa membuka
-   */
-
-  handle.addEventListener('click', () => {
-
-    toggleMixQueue();
-
-  });
-
-}
-
-
-/* =============================================
-   TOMBOL CLEAR
-   ============================================= */
-
-function initMixButtons() {
-
-  const clearButton = document.getElementById('queue-clear');
-
-  if (clearButton) {
-
-    clearButton.addEventListener('click', (e) => {
-
-      e.stopPropagation();
-
-      clearMixQueue();
-
-    });
-
-  }
-
-}
-
-
-/* =============================================
-   AUTO QUEUE
-   ============================================= */
-
-function buildAutoMixQueue(currentIndex) {
-
-  mixQueue = [];
-
-  if (!songs || songs.length === 0) {
-    renderMixQueue();
-    return;
-  }
-
-
-  /*
-   * Ambil maksimal 5 lagu setelah lagu sekarang
-   */
-
-  const maxQueue = Math.min(5, songs.length - 1);
-
-
-  for (let i = 1; i <= maxQueue; i++) {
-
-    const nextIndex =
-      (currentIndex + i) % songs.length;
-
-    mixQueue.push(nextIndex);
-
-  }
-
-
-  renderMixQueue();
-
-}
 
 /* =============================================
    SONG LIST
@@ -991,12 +667,35 @@ function selectSong(idx, autoPlay) {
 }
 
 function nextSong() {
+
+  /* Repeat satu lagu */
   if (repeatMode === 2) {
     audio.currentTime = 0;
-    if (isPlaying) audio.play();
+
+    if (isPlaying) {
+      audio.play();
+    }
+
     return;
   }
-  const next = isShuffle ? shuffleNext() : simpleNext();
+
+  /* Prioritas pertama: MIX */
+  if (mixQueue.length > 0) {
+
+    const next = mixQueue.shift();
+
+    renderMixQueue();
+
+    selectSong(next, isPlaying);
+
+    return;
+  }
+
+  /* Kalau MIX kosong, gunakan sistem normal */
+  const next = isShuffle
+    ? shuffleNext()
+    : simpleNext();
+
   selectSong(next, isPlaying);
 }
 
@@ -1058,6 +757,169 @@ function toggleRepeat() {
   const labels = ['Ulangi nonaktif', 'Ulangi semua', 'Ulangi satu'];
   showToast('🔁 ' + labels[repeatMode]);
 }
+/* =============================================
+   MIX / UP NEXT
+   ============================================= */
+
+const mixPanel = document.getElementById('mix-panel');
+const mixList = document.getElementById('mix-list');
+const btnClearMix = document.getElementById('btn-clear-mix');
+const btnAddMix = document.getElementById('btn-add-mix');
+
+
+/* Render daftar MIX */
+function renderMixQueue() {
+  mixList.innerHTML = '';
+
+  if (mixQueue.length === 0) {
+    mixList.innerHTML = `
+      <div style="
+        padding:20px;
+        text-align:center;
+        color:rgba(255,255,255,.4);
+        font-size:12px;
+      ">
+        Belum ada lagu berikutnya
+      </div>
+    `;
+    return;
+  }
+
+  mixQueue.forEach((idx, position) => {
+    const song = songs[idx];
+
+    const item = document.createElement('div');
+    item.className = 'mix-item';
+
+    item.innerHTML = `
+      <div class="mix-cover">
+        ${
+          song.cover
+          ? `<img src="${esc(song.cover)}" alt="">`
+          : ''
+        }
+      </div>
+
+      <div class="mix-info">
+        <div class="mix-title">${esc(song.title)}</div>
+        <div class="mix-artist">${esc(song.artist)}</div>
+      </div>
+
+      <button
+        class="mix-remove"
+        aria-label="Hapus lagu"
+        data-position="${position}"
+      >
+        ×
+      </button>
+    `;
+
+    mixList.appendChild(item);
+  });
+
+  /* Tombol hapus */
+  mixList.querySelectorAll('.mix-remove').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const position = Number(btn.dataset.position);
+
+      mixQueue.splice(position, 1);
+
+      renderMixQueue();
+    });
+  });
+}
+
+
+/* Buka / tutup panel */
+function toggleMixPanel() {
+  mixPanel.classList.toggle('open');
+
+  if (mixPanel.classList.contains('open')) {
+    renderMixQueue();
+  }
+}
+
+
+/* Tambahkan lagu ke MIX */
+function addToMix(idx) {
+
+  if (idx === currentIdx) {
+    showToast('Lagu sedang diputar');
+    return;
+  }
+
+  if (mixQueue.includes(idx)) {
+    showToast('Lagu sudah ada di MIX');
+    return;
+  }
+
+  mixQueue.push(idx);
+
+  renderMixQueue();
+
+  showToast(`"${songs[idx].title}" ditambahkan`);
+}
+
+
+/* Bersihkan MIX */
+function clearMix() {
+  mixQueue = [];
+  renderMixQueue();
+
+  showToast('MIX dibersihkan');
+}
+
+/* =============================================
+   SWIPE MIX PANEL
+   ============================================= */
+
+let mixStartY = 0;
+let mixCurrentY = 0;
+
+mixPanel.addEventListener('touchstart', (e) => {
+  mixStartY = e.touches[0].clientY;
+});
+
+mixPanel.addEventListener('touchmove', (e) => {
+  mixCurrentY = e.touches[0].clientY;
+});
+
+mixPanel.addEventListener('touchend', () => {
+
+  const distance = mixCurrentY - mixStartY;
+
+  /* Swipe ke atas */
+  if (distance < -50) {
+    mixPanel.classList.add('open');
+  }
+
+  /* Swipe ke bawah */
+  if (distance > 50) {
+    mixPanel.classList.remove('open');
+  }
+
+});
+document.querySelector('.mix-handle').addEventListener('click', () => {
+  toggleMixPanel();
+});
+
+btnAddMix.addEventListener('click', () => {
+
+  const available = songs
+    .map((song, index) => ({ song, index }))
+    .filter(item =>
+      item.index !== currentIdx &&
+      !mixQueue.includes(item.index)
+    );
+
+  if (available.length === 0) {
+    showToast('Tidak ada lagu lain');
+    return;
+  }
+
+  /* Tambahkan lagu pertama yang tersedia */
+  addToMix(available[0].index);
+});
 
 /* Auto next on end */
 audio.addEventListener('ended', () => {
