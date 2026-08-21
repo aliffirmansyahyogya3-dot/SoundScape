@@ -190,28 +190,41 @@
       <svg class="vol-icon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
     </div>
     
-<!-- MIX / UP NEXT -->
-<div id="mix-panel" class="mix-panel">
-  <div class="mix-handle"></div>
+<!-- MIX QUEUE -->
+<div id="mix-sheet" class="mix-sheet">
 
-  <div class="mix-header">
-    <div>
-      <span class="mix-label">MIX</span>
-      <span class="mix-subtitle">Berikutnya</span>
+  <div class="mix-handle-area" id="mix-handle">
+    <div class="mix-handle-line"></div>
+    <span>MIX</span>
+  </div>
+
+  <div class="mix-content">
+
+    <div class="mix-header">
+      <div>
+        <h2>Berikutnya</h2>
+        <p id="mix-count">0 lagu</p>
+      </div>
+
+      <button id="mix-clear" class="mix-clear">
+        Bersihkan
+      </button>
     </div>
 
-    <button id="btn-clear-mix" class="mix-clear">
-      Bersihkan
-    </button>
+    <div id="mix-queue" class="mix-queue">
+      <!-- antrean lagu dibuat JS -->
+    </div>
+
+    <div class="mix-divider"></div>
+
+    <h3 class="mix-section-title">Pilih lagu berikutnya</h3>
+
+    <div id="mix-song-list" class="mix-song-list">
+      <!-- daftar lagu dibuat JS -->
+    </div>
+
   </div>
 
-  <div id="mix-list" class="mix-list">
-    <!-- Lagu berikutnya dibuat oleh JS -->
-  </div>
-
-  <button id="btn-add-mix" class="mix-add">
-    + Tambahkan lagu
-  </button>
 </div>
     
   </div><!-- #screen-player -->
